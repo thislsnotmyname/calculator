@@ -1,0 +1,31 @@
+/* JM, 07/26/2024 */
+* {
+    box-sizing: border-box;
+}
+html, body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+div#calculator {
+    display: flex;
+    flex-flow: row wrap;
+}
+#display {
+    border: 3px solid black;
+    flex: 100%;
+}
+.button {
+    flex: 25%;
+}
+#clear {
+    flex: 75%;
+}
+#_0 {
+    flex: 50%;
+}
