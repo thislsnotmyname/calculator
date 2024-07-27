@@ -6,6 +6,7 @@ html, body {
     width: 100vw;
     height: 100vh;
     margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 body {
     display: flex;
@@ -15,17 +16,32 @@ body {
 div#calculator {
     display: flex;
     flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    max-height: 50vh;
+    aspect-ratio: 4 / 5;
+    /* gap: 10px; */
 }
 #display {
     border: 3px solid black;
-    flex: 100%;
+    flex: 10 200%;
+    aspect-ratio: 5 / 1;
+    text-align: right;
+    display: flex;
+    justify-content: end;
+    align-items: center;
 }
 .button {
-    flex: 25%;
+    flex: 2.5 25%;
+    aspect-ratio: 1;
+    font-weight: 700;
+    font-size: 1.5em;
 }
 #clear {
-    flex: 75%;
+    flex: 7.5 75%;
+    aspect-ratio: 3 / 1;
 }
 #_0 {
-    flex: 50%;
+    flex: 5 50%;
+    aspect-ratio: 2 / 1;
 }
