@@ -34,6 +34,7 @@ div#calculator {
     aspect-ratio: 5 / 1;
     text-align: right;
     display: flex;
+    flex-wrap: nowrap;
     justify-content: end;
     align-items: center;
     padding: 10px;

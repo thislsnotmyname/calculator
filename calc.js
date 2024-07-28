@@ -3,11 +3,16 @@
 
 const buttons = document.querySelector('#calculator');
 const display = document.querySelector('#display');
-const operators = [
-    '+',
-    '-',
-    'x',
-
+const operators = {
+    plus: '+',
+    minus: '-',
+    multiply: 'x',
+    divide: '÷',
+};
+const keys = [
+    ...[...buttons.children]
+    .map((elem) => elem.getAttribute('data-key'))
+    .filter((key) => key !== null)
 ];
 
 let x = '';
@@ -51,7 +56,7 @@ let equals = function(x, y, operator) {
         default:
             return 'ERROR: No operator defined.';
     }
-    return result;
+    return result.toString();
 }
 
 let updateText = function() {
@@ -59,55 +64,68 @@ let updateText = function() {
     if (operator === '') {
         return `${x}`;
     } else if (y === '') {
-        return `${x} ${operator}`;
+        return `${x} ${operators[operator]}`;
     }
-    
-    console.table(x, y, operator);
 
-    return displayText = `${x} ${operator} ${y}`;
+    return displayText = `${x} ${operators[operator]} ${y}`;
 }
 
-buttons.addEventListener('click', (e) => {
-    if (e.target.nodeName !== 'BUTTON') return;
+buttons.focus();
+display.textContent = updateText();
 
+buttons.addEventListener('click', (e) => {
+    console.log(e);
+    if (e.target.nodeName !== 'BUTTON') return;
     if (e.target.id[0] === '_') {
         if (operator === '') {
-            x = Number(`${x}${e.target.id[1]}`);
+            if (x.length >= 10) return;
+            x = `${x}${e.target.id[1]}`;
         } else {
-            y = Number(`${y}${e.target.id[1]}`);
+            if (y.length >= 10) return;
+            y = `${y}${e.target.id[1]}`;
         }
     } else if (x !== '') {
         switch (e.target.id) {
-            case "dec":
-
+            case 'dec':
+                if (operator === '') {
+                    if (x.toString().includes('.')) break;
+                    x = `${x}.`;
+                } else {    
+                    if (y.toString().includes('.')) break;
+                    y = `${y}.`;
+                }
                 break;
-            case "clear":
+            case 'clear':
                 x = '';
                 y = '';
                 operator = '';
                 break;
-            case "back":
+            case 'back':
                 if (operator === '') {
-                    x = x.toString();
-                    x = Number(x.slice(0, x.length - 1));
+                    x = x.slice(0, x.length - 1);
+                } else if (y === '') {
+                    operator = '';
                 } else {
-                    y = y.toString();
-                    y = Number(y.slice(0, y.length - 1));
+                    y = y.slice(0, y.length - 1);
                 }
                 break;
             case 'equals':
                 if (y === '') {
                     break;
                 } else {
+                    x = parseFloat(x);
+                    y = parseFloat(y);
                     x = equals(x, y, operator);
                     y = '';
                     operator = '';
                 }
-            break;
+                break;
             default:
                 if (operator === '') {
                     operator = e.target.id;
                 } else if (y !== '') {
+                    x = parseFloat(x);
+                    y = parseFloat(y);
                     x = equals(x, y, operator);
                     y = '';
                     operator = e.target.id;
@@ -117,3 +135,12 @@ buttons.addEventListener('click', (e) => {
 
     display.textContent = updateText();
 });
+
+document.querySelector('body').addEventListener('keydown', (e) => {
+    if (!keys.includes(e.key)) return;
+
+    let toBePressed = [...buttons.querySelectorAll(".button")].filter((node) => node.getAttribute('data-key') === e.key)[0];
+    
+    let mouseclick = new PointerEvent('click', {bubbles: true});
+    toBePressed.dispatchEvent(mouseclick);
+})
