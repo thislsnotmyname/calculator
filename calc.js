@@ -1,8 +1,14 @@
 'use strict';
-// JM, 07/26/2024
+// JM, 07/29/2024
 
+const body = document.querySelector('body');
 const buttons = document.querySelector('#calculator');
 const display = document.querySelector('#display');
+
+const xDisplay = document.querySelector('#x');
+const operatorDisplay = document.querySelector('#operator');
+const yDisplay = document.querySelector('#y');
+
 const operators = {
     plus: '+',
     minus: '-',
@@ -60,38 +66,51 @@ let equals = function(x, y, operator) {
 }
 
 let updateText = function() {
-    if (x === '') return '';
-    if (operator === '') {
-        return `${x}`;
+    if (x === '') {
+        xDisplay.textContent = '';
+        operatorDisplay.textContent = '';
+        yDisplay.textContent = '';
+        return displayText = '';
+    } else if (operator === '') {
+        xDisplay.textContent = '';
+        operatorDisplay.textContent = '';
+        yDisplay.textContent = x;
+        return displayText = `${x}`;
     } else if (y === '') {
-        return `${x} ${operators[operator]}`;
+        xDisplay.textContent = x;
+        operatorDisplay.textContent = operators[operator];
+        yDisplay.textContent = '';
+        return displayText = `${x} ${operators[operator]}`;
     }
-
+    
+    xDisplay.textContent = x;
+    operatorDisplay.textContent = operators[operator];
+    yDisplay.textContent = y;
     return displayText = `${x} ${operators[operator]} ${y}`;
 }
 
 buttons.focus();
-display.textContent = updateText();
+updateText();
 
 buttons.addEventListener('click', (e) => {
-    console.log(e);
     if (e.target.nodeName !== 'BUTTON') return;
+
     if (e.target.id[0] === '_') {
         if (operator === '') {
-            if (x.length >= 10) return;
+            if (x.length >= 17) return;
             x = `${x}${e.target.id[1]}`;
         } else {
-            if (y.length >= 10) return;
+            if (y.length >= 17) return;
             y = `${y}${e.target.id[1]}`;
         }
     } else if (x !== '') {
         switch (e.target.id) {
             case 'dec':
                 if (operator === '') {
-                    if (x.toString().includes('.')) break;
+                    if (x.includes('.')) break;
                     x = `${x}.`;
                 } else {    
-                    if (y.toString().includes('.')) break;
+                    if (y.includes('.')) break;
                     y = `${y}.`;
                 }
                 break;
@@ -133,14 +152,24 @@ buttons.addEventListener('click', (e) => {
         }
     }
 
-    display.textContent = updateText();
+    updateText();
 });
 
-document.querySelector('body').addEventListener('keydown', (e) => {
+body.addEventListener('keydown', (e) => {
     if (!keys.includes(e.key)) return;
 
-    let toBePressed = [...buttons.querySelectorAll(".button")].filter((node) => node.getAttribute('data-key') === e.key)[0];
+    const toBePressed = [...buttons.querySelectorAll('.button')].filter((node) => node.getAttribute('data-key') === e.key)[0];
     
+    document.querySelector(`#${toBePressed.id}`).classList.toggle('clicked');
+
     let mouseclick = new PointerEvent('click', {bubbles: true});
     toBePressed.dispatchEvent(mouseclick);
-})
+});
+
+body.addEventListener('keyup', (e) => {
+    if (!keys.includes(e.key)) return;
+
+    const toBePressed = [...buttons.querySelectorAll('.button')].filter((node) => node.getAttribute('data-key') === e.key)[0];
+    
+    document.querySelector(`#${toBePressed.id}`).classList.toggle('clicked');
+});

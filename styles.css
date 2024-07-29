@@ -1,4 +1,4 @@
-/* JM, 07/26/2024 */
+/* JM, 07/29/2024 */
 * {
     box-sizing: border-box;
 }
@@ -25,19 +25,35 @@ div#calculator {
     color: #C0B7B1;
     border-radius: 2.5%;
     padding: 20px;
-    /* gap: 10px; */
 }
 #display {
     border: 3px outset #24272B99;
     background-color: #07080A44;
     flex: 10 100%;
-    aspect-ratio: 5 / 1;
+    aspect-ratio: 4 / 1;
     text-align: right;
     display: flex;
-    flex-wrap: nowrap;
-    justify-content: end;
-    align-items: center;
-    padding: 10px;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: start;
+    min-height: calc(1.35em + 0.95em + 1.75em);
+    padding: 3px;
+}
+#display > * {
+    margin: 0;
+}
+#x {
+    flex: 100%;
+    text-align: left;
+    font-size: 0.95em;
+}
+#operator {
+    font-size: 1.35em;
+    align-self: end;
+}
+#y {
+    margin-left: auto;
+    font-size: 1.75em;
 }
 .button {
     flex: 2.5 25%;
@@ -48,6 +64,14 @@ div#calculator {
     border: 3px outset #3E78B2;
     background-color: #3e78b2da;
     color: #C0B7B1;
+}
+.button:active, .clicked {
+    border-style: inset;
+}
+.operator {
+    border-color: #1a58a3;
+    background-color: #1a58a3da;
+    text-shadow: 0px 0px 5px #3e78b2ef;
 }
 #clear, #back {
     flex: 3.75 37.5%;

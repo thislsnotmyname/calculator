@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- JM, 07/26/2024 -->
+<!-- JM, 07/29/2024 -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,29 +10,34 @@
 </head>
 <body>
     <div id="calculator">
-        <div id="display"><noscript>70 - 1</noscript></div>
+        <div id="display">
+            <noscript>70 - 1</noscript>
+            <p id="x"></p>
+            <p id="operator"></p>
+            <p id="y"></p>
+        </div>
         <button class="button" id="clear" data-key="Delete">cls</button>
         <button class="button" id="back" data-key="Backspace">&lt;&lt;</button>
-        <button class="button" id="divide" data-key="/">&div;</button>
+        <button class="button operator" id="divide" data-key="/">&div;</button>
 
         <button class="button" id="_7" data-key="7">7</button>
         <button class="button" id="_8" data-key="8">8</button>
         <button class="button" id="_9" data-key="9">9</button>
-        <button class="button" id="multiply" data-key="*">x</button>
+        <button class="button operator" id="multiply" data-key="*">x</button>
 
         <button class="button" id="_4" data-key="4">4</button>
         <button class="button" id="_5" data-key="5">5</button>
         <button class="button" id="_6" data-key="6">6</button>
-        <button class="button" id="minus" data-key="-">-</button>
+        <button class="button operator" id="minus" data-key="-">-</button>
 
         <button class="button" id="_1" data-key="1">1</button>
         <button class="button" id="_2" data-key="2">2</button>
         <button class="button" id="_3" data-key="3">3</button>
-        <button class="button" id="plus" data-key="+">+</button>
+        <button class="button operator" id="plus" data-key="+">+</button>
 
         <button class="button" id="_0" data-key="0">0</button>
         <button class="button" id="dec" data-key=".">.</button>
-        <button class="button" id="equals" data-key="Enter">=</button>
+        <button class="button operator" id="equals" data-key="Enter">=</button>
     </div>
 </body>
 </html>
